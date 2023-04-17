@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+@layer components {
+  .main-content {
+    @apply relative max-[1440px]:overflow-hidden flex max-[1440px]:mx-0 max-[1540px]:mx-[20px] max-[1740px]:mx-[50px] mx-[100px] max-[1440px]:pb-0 pb-[15px] h-screen;
+  }
+
+  .panel {
+    @apply mt-[15px] max-[1440px]:my-0;
+  }
+
+  .left-panel {
+    @apply w-[640px] bg-[#F0F2F5] border-r-[1px] border-slate-200;
+  }
+
+  .left-panel .options {
+    @apply flex;
+  }
+
+  .left-panel .profile-photo,
+  .right-panel .chat-thumbnail {
+    @apply cursor-pointer w-[35px] h-[35px] mr-2 mt-1 rounded-full;
+  }
+
+  .right-panel .chat-thumbnail {
+    @apply mr-3 mt-[3px];
+  }
+
+  .left-panel svg {
+    @apply cursor-pointer;
+  }
+
+  .right-panel {
+    @apply w-full bg-[#F0F2F5];
+  }
+
+  .chat-list {
+    @apply overflow-y-auto overflow-x-hidden mb-[200px] h-[calc(100vh-100%)] max-[1440px]:min-h-[calc(100vh-110px)] min-h-[calc(100vh-140px)] bg-white;
+  }
+
+  .chat-list .chat-card {
+    @apply flex items-center gap-2 p-4 pl-3 hover:cursor-pointer hover:bg-[#F5F6F6];
+  }
+
+  .message-list{
+    @apply pb-5 lg:h-[85%] h-[85%] flex flex-col-reverse overflow-y-auto ml-[20px];
+  }
+
+  .message-list .message-card{
+    @apply bg-white rounded-md pl-5 pr-2 py-1 my-1 w-[fit-content] text-[#111b21] ;
+  }
+
+  .message-list .message-card.fromOther{
+    @apply ml-2 mr-2
+  }
+
+  .message-list .message-card.fromMe{
+    @apply ml-auto mr-[20px] bg-whatsapp-green-chat;
+  }
+
+  input.not-validated{
+    @apply dark:border-red-500 border-red-600;
+  }
+}
+
+.spinner-container {
+  -webkit-animation: rotate 2s linear infinite;
+  animation: rotate 2s linear infinite;
+  display:block;
+}
+
+.spinner-container .path {
+stroke-dasharray: 1,150; /* 1%, 101% circumference */
+stroke-dashoffset: 0;
+stroke: rgba(27, 154, 89, 0.7);
+stroke-linecap: round;
+-webkit-animation: dash 1.5s ease-in-out infinite;
+animation: dash 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate {
+100% { transform: rotate(360deg); }
+}
+@-webkit-keyframes rotate{
+100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes dash {
+0% {
+  stroke-dasharray: 1,150;  /* 1%, 101% circumference */
+  stroke-dashoffset: 0;
+}
+50% {
+  stroke-dasharray: 90,150; /* 70%, 101% circumference */
+  stroke-dashoffset: -35;   /* 25% circumference */
+}
+100% {
+  stroke-dasharray: 90,150; /* 70%, 101% circumference */
+  stroke-dashoffset: -124;  /* -99% circumference */
+}
+}
+@-webkit-keyframes dash {
+0% {
+  stroke-dasharray: 1,150;  /* 1%, 101% circumference */
+  stroke-dashoffset: 0;
+}
+50% {
+  stroke-dasharray: 90,150; /* 70%, 101% circumference */
+  stroke-dashoffset: -35;   /* 25% circumference */
+}
+100% {
+  stroke-dasharray: 90,150; /* 70%, 101% circumference */
+  stroke-dashoffset: -124;  /* -99% circumference */
+}
+}
