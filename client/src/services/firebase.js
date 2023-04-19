@@ -6,6 +6,8 @@ import {
   query,
   where,
   getDocs,
+  getDoc,
+  updateDoc,
 } from "firebase/firestore";
 import { getFirestore } from "@firebase/firestore";
 import { getDatabase, onValue, ref, set } from "firebase/database";
@@ -17,9 +19,15 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { login, logOut } from "../redux/reducers/authSlice";
+import {
+  login,
+  logOut,
+  setAbout,
+  setFriends,
+  setUsername,
+} from "../redux/reducers/authSlice";
 import store from "../redux/store";
-import { setIsLoading } from "../redux/reducers/chatSlice";
+import { setIsLoading, setMessages } from "../redux/reducers/chatSlice";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -40,7 +48,10 @@ const db_realTime = getDatabase(app);
 export const checkUser = () => {
   onAuthStateChanged(auth, (userAuth) => {
     if (userAuth) {
-      setCurrentUser();
+      store.dispatch(setIsLoading(true));
+      setCurrentUser().then(() => {
+        fetchFriends();
+      });
     } else {
       logOutUser();
     }
@@ -48,27 +59,31 @@ export const checkUser = () => {
 };
 
 const setCurrentUser = () => {
-  store.dispatch(setIsLoading(true));
+  return new Promise((resolve, reject) => {
+    const currentUser = auth.currentUser;
 
-  const currentUser = auth.currentUser;
-
-  const userRef = collection(db, "users");
-  const dataQuery = query(
-    userRef,
-    where("username", "==", currentUser.displayName)
-  );
-  getDocs(dataQuery).then((data) => {
-    const userDetailed = data.docs[0].data();
-
-    store.dispatch(
-      login({
-        username: userDetailed.username,
-        email: userDetailed.email,
-        about: userDetailed.about,
-      })
+    const userRef = collection(db, "users");
+    const dataQuery = query(
+      userRef,
+      where("username", "==", currentUser.displayName)
     );
+    getDocs(dataQuery)
+      .then((data) => {
+        const userDetailed = data.docs[0].data();
 
-    store.dispatch(setIsLoading(false));
+        store.dispatch(
+          login({
+            username: userDetailed.username,
+            email: userDetailed.email,
+            about: userDetailed.about,
+          })
+        );
+
+        resolve();
+      })
+      .catch((error) => {
+        reject(error);
+      });
   });
 };
 
@@ -102,29 +117,16 @@ export const signUpWithEmail = (username, email, password) => {
   });
 };
 
-export const loginWithUsername = (username, password) => {
+export const loginWithUsername = (email, password) => {
   return new Promise((resolve, reject) => {
-    const userRef = collection(db, "users");
-    const dataQuery = query(userRef, where("username", "==", username));
-    getDocs(dataQuery)
-      .then((data) => {
-        if (data.docs.length === 0) {
-          reject("Username cannot be found");
-        }
-        const email = data.docs[0].data().email;
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
 
-        signInWithEmailAndPassword(auth, email, password)
-          .then((userCredential) => {
-            const user = userCredential.user;
-
-            resolve(user);
-          })
-          .catch((error) => {
-            reject(error.code);
-          });
+        resolve(user);
       })
-      .catch((err) => {
-        reject(err);
+      .catch((error) => {
+        reject(error.code);
       });
   });
 };
@@ -135,13 +137,129 @@ export const logOutUser = () => {
   });
 };
 
-export const getUserListFromCurrentUser = () => {
+export const updateUsername = (username) => {
+  const currentUser = auth.currentUser;
+  if (currentUser.displayName !== username) {
+    return new Promise((resolve, reject) => {
+      updateProfile(currentUser, { displayName: username })
+        .then(() => {
+          const userRef = doc(db, "users", currentUser.uid);
+          updateDoc(userRef, {
+            username,
+          })
+            .then(() => {
+              store.dispatch(setUsername(username));
+              resolve();
+            })
+            .cathc((err) => {
+              reject(err);
+            });
+        })
+        .catch((err) => reject(err));
+    });
+  } else {
+    return new Promise((resolve, reject) => {
+      resolve("Username didn't changed");
+    });
+  }
+};
+
+export const updateUserAbout = (about) => {
   const currentUser = auth.currentUser;
 
-  onValue(ref(db_realTime), (snapshot) => {
-    const data = snapshot.val();
-    if (data !== null) {
-      console.log(data);
-    }
+  const authState = store.getState().auth;
+
+  if (authState.about !== about) {
+    return new Promise((resolve, reject) => {
+      const userRef = doc(db, "users", currentUser.uid);
+      updateDoc(userRef, {
+        about,
+      })
+        .then(() => {
+          store.dispatch(setAbout(about));
+          resolve();
+        })
+        .cathc((err) => {
+          reject(err);
+        });
+    });
+  } else {
+    return new Promise((resolve, reject) => {
+      resolve("About didn't changed");
+    });
+  }
+};
+
+export const fetchFriends = () => {
+  const currentUser = auth.currentUser;
+
+  const allRef = ref(db_realTime);
+
+  onValue(allRef, (snapshot) => {
+    const { friends, messages } = snapshot.val();
+
+    const userMessages = messages
+      .filter(
+        (message) =>
+          message.receiver === currentUser.uid ||
+          message.sender === currentUser.uid
+      )
+      .map((messageItem) => {
+        let messageDetailed = {
+          message: messageItem.message,
+          createdAt: messageItem.createdAt,
+
+        };
+
+        getDoc(doc(db, "users", messageItem.receiver))
+          .then((value) => {
+            messageDetailed = {...messageDetailed,receiver:value.data()}
+          })
+          .then(() => {
+            getDoc(doc(db, "users", messageItem.sender)).then((value) => {
+              messageDetailed = {...messageDetailed,sender:value.data()}
+            });
+          });
+
+        return messageDetailed
+      });
+
+      store.dispatch(setMessages(userMessages))
+
+    Promise.all(
+      friends[currentUser.uid].map((id) => {
+        return getDoc(doc(db, "users", id));
+      })
+    ).then((values) => {
+      store.dispatch(
+        setFriends(
+          values.map((value) => {
+            return value.data();
+          })
+        )
+      );
+
+      store.dispatch(setIsLoading(false));
+    });
   });
+
+  // onValue(friendsRef, (snapshot) => {
+  //   const friendIds = snapshot.val();
+
+  //   Promise.all(
+  //     friendIds.map((id) => {
+  //       return getDoc(doc(db, "users", id));
+  //     })
+  //   ).then((values) => {
+  //     store.dispatch(
+  //       setFriends(
+  //         values.map((value) => {
+  //           return value.data();
+  //         })
+  //       )
+  //     );
+
+  //     store.dispatch(setIsLoading(false));
+  //   });
+  // });
 };

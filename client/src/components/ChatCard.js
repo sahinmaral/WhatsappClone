@@ -1,6 +1,6 @@
 import React from "react";
 
-function ChatCard() {
+function ChatCard({ friend }) {
   return (
     <div className="chat-card">
       <img
@@ -9,11 +9,17 @@ function ChatCard() {
       />
       <div className="flex flex-col w-[370px] mr-[30px]">
         <div className="flex justify-between">
-          <p className="text-slate-900 text-[0.8em] font-normal">Andrew Alfred</p>
-          <p className="text-slate-500 text-[0.7em] font-normal">11:15 AM</p>
+          <p className="text-slate-900 text-[0.8em] font-normal">
+            {friend.username}
+          </p>
+          <p className="text-slate-500 text-[0.7em] font-normal">
+            {/* Son mesaj atma tarihi */}
+          </p>
         </div>
         <p className="text-slate-500 text-[0.8em] font-normal text-ellipsis overflow-hidden whitespace-nowrap">
-          Bana yardim eder misin sayin arkadasim Sahin Bana yardim eder misin sayin arkadasim Sahin
+          {/* Son mesaj */}
+          Bana yardim eder misin sayin arkadasim Sahin Bana yardim eder misin
+          sayin arkadasim Sahin
         </p>
       </div>
     </div>

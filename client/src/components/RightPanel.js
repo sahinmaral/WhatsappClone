@@ -4,7 +4,7 @@ import WelcomeWhatsapp from "./WelcomeWhatsapp";
 import ChatDescription from "./ChatDescription";
 import MessageList from "./MessageList";
 
-function RightPanel({isClicked = true}) {
+function RightPanel({isClicked}) {
   return (
     <div className="right-panel panel">
       {!isClicked && <WelcomeWhatsapp />}

@@ -9,6 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/reducers/authSlice";
 
+
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -16,12 +17,12 @@ function Login() {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      username: "test",
+      email: "test@hotmail.com",
       password: "testtest",
     },
     validationSchema: LoginSchema,
     onSubmit: (values) => {
-      loginWithUsername(values.username, values.password)
+      loginWithUsername(values.email, values.password)
         .then((user) => {
           dispatch(
             login({
@@ -77,23 +78,23 @@ function Login() {
             >
               <div>
                 <label
-                  htmlFor="username"
+                  htmlFor="email"
                   className="block mb-2 text-sm font-medium text-green-900 dark:text-white"
                 >
-                  Username
+                  Email address
                 </label>
                 <input
-                  type="text"
-                  id="username"
+                  type="email"
+                  id="email"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.username}
+                  value={formik.values.email}
                   className="bg-gray-50 border border-gray-300 text-green-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="username"
+                  placeholder="email@address.com"
                 />
-                {formik.errors.username && formik.touched.username ? (
+                {formik.errors.email && formik.touched.email ? (
                   <p className="mt-2 ml-3 text-[13px] text-red-600 dark:text-red-400">
-                    {formik.errors.username}
+                    {formik.errors.email}
                   </p>
                 ) : null}
               </div>

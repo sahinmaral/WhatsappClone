@@ -6,8 +6,13 @@ module.exports = {
       colors: {
         "whatsapp-green": "#00A884",
         "whatsapp-gray": "#F0F2F5",
-        "whatsapp-green-chat":"#D9FDD3",
-        primary: {"50":"#eff6ff","100":"#dbeafe","200":"#bfdbfe","300":"#93c5fd","400":"#60a5fa","500":"#3b82f6","600":"#2563eb","700":"#1d4ed8","800":"#1e40af","900":"#1e3a8a"}
+        "whatsapp-green-chat": "#D9FDD3",
+        "whatsapp-green-panel": "#008069",
+        "whatsapp-gray-icon": "#8696a0",
+      },
+      boxShadow: {
+        "whatsapp-shadow":
+          "0 2px 5px 0 rgba(11,20,26,0.26),0 2px 10px 0 rgba(11,20,26,0.16);",
       },
     },
   },

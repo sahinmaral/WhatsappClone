@@ -15,10 +15,8 @@ function MainContainer() {
 
   return (
     <div className="w-full h-full">
-      {isLoading && (
-        <WhatsappIcons type="loading" width="65" height="65"/>
-      )}
-      {!isLoading && (
+      {isLoading && <WhatsappIcons type="loading" width="65" height="65" />}
+      {!isLoading  && (
         <>
           <BackBanner />
           <MainContent />
