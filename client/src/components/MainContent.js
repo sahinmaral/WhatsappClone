@@ -6,7 +6,7 @@ import { ModalStates } from "../constants/componentStates";
 import ThemeModalContent from "./ThemeModalContent";
 
 function MainContent() {
-  const { modalState } = useSelector((state) => state.chat);
+  const { modalState,clickedChat } = useSelector((state) => state.chat);
 
 
   return (
@@ -17,7 +17,7 @@ function MainContent() {
         }`}
       >
         <LeftPanel />
-        <RightPanel isClicked={false} />
+        <RightPanel clickedChat={clickedChat} />
       </div>
       {modalState.id !== ModalStates.NONE && (
         <CustomModal>
@@ -25,6 +25,8 @@ function MainContent() {
             switch (modalState.id) {
               case ModalStates.THEME_MODAL:
                 return <ThemeModalContent />;
+              default:
+                break;
             }
           })()}
         </CustomModal>

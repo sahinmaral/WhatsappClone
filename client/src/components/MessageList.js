@@ -1,12 +1,35 @@
 import React from "react";
 import MessageCard from "./MessageCard";
+import { useSelector } from "react-redux";
 
 function MessageList() {
+  const { messages, clickedChat } = useSelector((state) => state.chat);
+  const { user } = useSelector((state) => state.auth);
+
   return (
     <div className="message-list">
-      {[...Array(55)].map((value, key) => {
-        return <MessageCard message={`Enim ipsum nulla sit proident. Irure laboris exercitation occaecat labore Enim ipsum nulla sit proident. Irure laboris exercitation occaecat labore Enim ipsum nulla sit proident. Irure laboris exercitation occaecat labore Enim ipsum nulla sit proident. Irure laboris exercitation occaecat labore Lorem qui elit velit. Sit ipsum eiusmod esse consequat ullamco esse. Incididunt do dolore aliqua amet ea enim consequat aliquip mollit magna adipisicing velit cillum irure. Excepteur incididunt est irure consequat mollit do fugiat anim aliqua excepteur. Ut do duis ut aliqua est culpa labore veniam qui mollit consectetur nostrud dolor. ${key}`} key={key} index={key}/>;
-      })}
+      {messages
+        .filter(
+          (messageItem) =>
+            (messageItem.sender.username === clickedChat.username &&
+              messageItem.receiver.username === user.username) ||
+            (messageItem.receiver.username === clickedChat.username &&
+              messageItem.sender.username === user.username)
+        )
+        .map((messageItem, key) => {
+          return (
+            <MessageCard
+              message={messageItem.message}
+              createdAt={messageItem.createdAt}
+              fromWho={
+                messageItem.sender.username === user.username
+                  ? "fromMe"
+                  : "fromOther"
+              }
+              key={key}
+            />
+          );
+        })}
     </div>
   );
 }

@@ -1,8 +1,9 @@
 import React from "react";
 import WhatsappIcons from "../icons/WhatsappIcons";
-
+import { useSelector } from "react-redux";
 
 function ChatDescription() {
+  const { clickedChat } = useSelector((state) => state.chat);
 
   return (
     <div className="flex justify-between border-b-[1px] border-slate-200 pb-3 pt-3 pl-3 bg-[#e5e7eb]">
@@ -15,15 +16,10 @@ function ChatDescription() {
 
         <div className="flex flex-col sm:w-[200px] md:w-[300px] lg:w-[500px] xl:w-[700px] 2xl:w-[1000px]">
           <span className="text-slate-900 text-normal font-normal">
-            Andrew Alfred
+            {clickedChat.username}
           </span>
           <span className="text-slate-500 text-[0.8em] font-normal h-[20px] text-ellipsis overflow-y-hidden overflow-x-hidden whitespace-nowrap">
-            Consectetur magna sunt sint fugiat commodo enim qui. Culpa laborum
-            ea ex aliquip magna ut ut in tempor. Minim eiusmod mollit amet sit
-            eu excepteur. Dolore fugiat nostrud velit fugiat deserunt amet anim
-            excepteur consequat consequat nisi mollit. Fugiat dolor qui proident
-            Lorem. Est est quis occaecat est enim. Qui voluptate irure eu
-            pariatur.
+            {clickedChat.about}
           </span>
         </div>
       </div>

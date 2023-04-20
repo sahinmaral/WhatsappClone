@@ -1,8 +1,16 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { setClickedChat } from "../redux/reducers/chatSlice";
 
 function ChatCard({ friend }) {
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    dispatch(setClickedChat(friend));
+  };
+
   return (
-    <div className="chat-card">
+    <div className="chat-card" onClick={handleClick}>
       <img
         className="w-10 h-10 rounded-full"
         src="https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=80"

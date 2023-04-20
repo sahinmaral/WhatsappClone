@@ -1,14 +1,13 @@
-import WhatsappIcons from "../icons/WhatsappIcons";
 import MessageTypePanel from "./MessageTypePanel";
 import WelcomeWhatsapp from "./WelcomeWhatsapp";
 import ChatDescription from "./ChatDescription";
 import MessageList from "./MessageList";
 
-function RightPanel({isClicked}) {
+function RightPanel({ clickedChat }) {
   return (
     <div className="right-panel panel">
-      {!isClicked && <WelcomeWhatsapp />}
-      {isClicked && (
+      {!clickedChat && <WelcomeWhatsapp />}
+      {clickedChat && (
         <div className="h-full bg-[#EFEAE2]">
           <ChatDescription />
 

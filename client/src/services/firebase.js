@@ -198,33 +198,35 @@ export const fetchFriends = () => {
   onValue(allRef, (snapshot) => {
     const { friends, messages } = snapshot.val();
 
-    const userMessages = messages
-      .filter(
-        (message) =>
-          message.receiver === currentUser.uid ||
-          message.sender === currentUser.uid
-      )
-      .map((messageItem) => {
-        let messageDetailed = {
-          message: messageItem.message,
-          createdAt: messageItem.createdAt,
+    const messagesFiltered = messages.filter(
+      (message) =>
+        message.receiver === currentUser.uid ||
+        message.sender === currentUser.uid
+    ).sort(function(a,b){
+      return new Date(Date.parse(b.createdAt)) - new Date(Date.parse(a.createdAt));
+    });;
 
+    messagesFiltered.forEach((messageItem) => {
+      let messageDetailed = {
+        message: messageItem.message,
+        createdAt: messageItem.createdAt,
+      };
+
+      Promise.all([
+        getDoc(doc(db, "users", messageItem.receiver)),
+        getDoc(doc(db, "users", messageItem.sender)),
+      ]).then((values) => {
+        messageDetailed = {
+          ...messageDetailed,
+          receiver: values[0].data(),
+          sender: values[1].data(),
         };
 
-        getDoc(doc(db, "users", messageItem.receiver))
-          .then((value) => {
-            messageDetailed = {...messageDetailed,receiver:value.data()}
-          })
-          .then(() => {
-            getDoc(doc(db, "users", messageItem.sender)).then((value) => {
-              messageDetailed = {...messageDetailed,sender:value.data()}
-            });
-          });
-
-        return messageDetailed
+        store.dispatch(
+          setMessages([...store.getState().chat.messages, messageDetailed])
+        );
       });
-
-      store.dispatch(setMessages(userMessages))
+    });
 
     Promise.all(
       friends[currentUser.uid].map((id) => {

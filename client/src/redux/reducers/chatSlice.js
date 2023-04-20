@@ -10,7 +10,8 @@ const initialState = {
     isOpened: false,
   },
   theme: "light",
-  messages : []
+  messages: [],
+  clickedChat: null,
 };
 
 export const chatSlice = createSlice({
@@ -29,13 +30,22 @@ export const chatSlice = createSlice({
     setTheme: (state, action) => {
       state.theme = action.payload;
     },
-    setMessages : (state,action) => {
-      state.messages = action.payload
-    }
+    setMessages: (state, action) => {
+      state.messages = action.payload;
+    },
+    setClickedChat: (state, action) => {
+      state.clickedChat = action.payload;
+    },
   },
 });
 
-export const { setIsLoading, setLeftPanelState, setModalState,setTheme,setMessages } =
-  chatSlice.actions;
+export const {
+  setIsLoading,
+  setLeftPanelState,
+  setModalState,
+  setTheme,
+  setMessages,
+  setClickedChat,
+} = chatSlice.actions;
 
 export default chatSlice.reducer;
