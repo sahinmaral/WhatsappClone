@@ -2,7 +2,7 @@ import ChatList from "./ChatList";
 import WhatsappIcons from "../icons/WhatsappIcons";
 import MyProfileDescription from "./MyProfileDescription";
 import { setLeftPanelState } from "../redux/reducers/chatSlice";
-import { LeftPanelStates } from "../constants/componentStates";
+import { LEFT_PANEL_STATES } from "../constants";
 import { useDispatch } from "react-redux";
 import DefaultLeftPanelOptionsMenu from "./DefaultLeftPanelOptionsMenu";
 
@@ -14,7 +14,7 @@ function DefaultLeftPanelContent() {
       <div className="flex justify-between pr-[5px] pl-[20px] py-[15px] default-left-panel">
         <div
           onClick={() =>
-            dispatch(setLeftPanelState(LeftPanelStates.UPDATE_PROFILE))
+            dispatch(setLeftPanelState(LEFT_PANEL_STATES.UPDATE_PROFILE))
           }
         >
           <MyProfileDescription />
@@ -22,7 +22,7 @@ function DefaultLeftPanelContent() {
         <div className="options">
           <span
             onClick={() =>
-              dispatch(setLeftPanelState(LeftPanelStates.ADD_FRIEND))
+              dispatch(setLeftPanelState(LEFT_PANEL_STATES.ADD_FRIEND))
             }
           >
             <WhatsappIcons
@@ -34,7 +34,7 @@ function DefaultLeftPanelContent() {
           </span>
           <span
             onClick={() =>
-              dispatch(setLeftPanelState(LeftPanelStates.SHOW_BLOCKED_FRIENDS))
+              dispatch(setLeftPanelState(LEFT_PANEL_STATES.SHOW_BLOCKED_FRIENDS))
             }
           >
             <WhatsappIcons

@@ -2,9 +2,9 @@ import React from "react";
 import WhatsappBanner from "../../images/whatsapp-banner.png";
 import { useFormik } from "formik";
 import { RegisterSchema } from "../../schema";
-import { signUpWithEmail } from "../../services/firebase";
+import { signUpWithEmail } from "../../services/firebase-auth";
 import { toast } from "react-toastify";
-import { returnLocalizatedError } from "../../constants/firebaseErrors";
+import { returnLocalizatedError } from "../../constants";
 import { Link, useNavigate } from "react-router-dom";
 
 function Register() {

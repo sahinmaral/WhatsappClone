@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { LeftPanelStates, ModalStates } from "../../constants/componentStates";
+import { LEFT_PANEL_STATES, MODAL_STATES } from "../../constants";
 
 const initialState = {
   isLoading: true,
-  leftPanelState: LeftPanelStates.DEFAULT,
+  leftPanelState: LEFT_PANEL_STATES.DEFAULT,
   modalState: {
-    id: ModalStates.NONE,
+    id: MODAL_STATES.NONE,
     header: "",
     isOpened: false,
   },

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setModalState, setTheme } from "../redux/reducers/chatSlice";
-import { ModalStates } from "../constants/componentStates";
+import { MODAL_STATES } from "../constants";
 
 function ThemeModalContent() {
   const { theme } = useSelector((state) => state.chat);
@@ -14,7 +14,7 @@ function ThemeModalContent() {
   const handleCloseModal = () => {
     dispatch(
       setModalState({
-        id: ModalStates.NONE,
+        id: MODAL_STATES.NONE,
         header: "",
         isOpened: false,
       })

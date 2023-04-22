@@ -3,8 +3,8 @@ import WhatsappIcons from "../icons/WhatsappIcons";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setLeftPanelState } from "../redux/reducers/chatSlice";
-import { LeftPanelStates } from "../constants/componentStates";
-import { logOutUser } from "../services/firebase";
+import { LEFT_PANEL_STATES } from "../constants";
+import { logOutUser } from "../services/firebase-auth";
 import { useNavigate } from "react-router-dom";
 
 function DefaultLeftPanelOptionsMenu() {
@@ -30,7 +30,7 @@ function DefaultLeftPanelOptionsMenu() {
         >
           <li
             onClick={() => {
-              dispatch(setLeftPanelState(LeftPanelStates.SETTINGS));
+              dispatch(setLeftPanelState(LEFT_PANEL_STATES.SETTINGS));
             }}
           >
             <span className="cursor-pointer rounded-t bg-white hover:bg-gray-200 py-4 pl-5 block whitespace-no-wrap">

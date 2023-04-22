@@ -30,6 +30,9 @@ export const authSlice = createSlice({
     setBlockedFriends: (state, action) => {
       state.user.blockedFriends = action.payload;
     },
+    setProfilePhoto : (state,action) => {
+      state.user.photoURL = action.payload
+    }
   },
 });
 
@@ -41,6 +44,7 @@ export const {
   setFriends,
   setSavedWallpaperColor,
   setBlockedFriends,
+  setProfilePhoto
 } = authSlice.actions;
 
 export default authSlice.reducer;

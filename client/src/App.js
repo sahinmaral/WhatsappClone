@@ -7,7 +7,7 @@ import MainContainer from "./pages/MainContainer";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { checkUser } from "./services/firebase";
+import { checkUser } from "./services/firebase-auth";
 
 function App() {
   const { user } = useSelector((state) => state.auth);

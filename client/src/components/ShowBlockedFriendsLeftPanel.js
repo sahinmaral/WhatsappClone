@@ -1,6 +1,6 @@
 import React from "react";
 import WhatsappIcons from "../icons/WhatsappIcons";
-import { LeftPanelStates } from "../constants/componentStates";
+import { LEFT_PANEL_STATES } from "../constants";
 import { useDispatch, useSelector } from "react-redux";
 import { setLeftPanelState } from "../redux/reducers/chatSlice";
 import BlockedFriendCard from "./BlockedFriendCard";
@@ -13,7 +13,7 @@ function ShowBlockedFriendsLeftPanel() {
     <>
       <div className="flex pr-[5px] pl-[20px] py-[35.5px] bg-whatsapp-green-panel">
         <div
-          onClick={() => dispatch(setLeftPanelState(LeftPanelStates.DEFAULT))}
+          onClick={() => dispatch(setLeftPanelState(LEFT_PANEL_STATES.DEFAULT))}
         >
           <WhatsappIcons
             type="left-arrow"

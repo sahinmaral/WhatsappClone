@@ -1,18 +1,21 @@
 import React from "react";
 import WhatsappIcons from "../icons/WhatsappIcons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLeftPanelState } from "../redux/reducers/chatSlice";
-import {LeftPanelStates} from "../constants/componentStates";
+import { checkProfilePhoto, LEFT_PANEL_STATES } from "../constants";
 import UpdateProfileForm from "./UpdateProfileForm";
+import ProfilePhotoOptionsMenu from "./ProfilePhotoOptionsMenu";
 
 function UpdateProfile() {
+  const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
 
   return (
     <>
       <div className="flex pr-[5px] pl-[20px] py-[35.5px] bg-whatsapp-green-panel">
         <div
-          onClick={() => dispatch(setLeftPanelState(LeftPanelStates.DEFAULT))}
+          onClick={() => dispatch(setLeftPanelState(LEFT_PANEL_STATES.DEFAULT))}
         >
           <WhatsappIcons
             type="left-arrow"
@@ -30,8 +33,10 @@ function UpdateProfile() {
         <div className="flex justify-center py-7">
           <img
             className="profile-photo"
-            src="https://pps.whatsapp.net/v/t61.24694-24/328164465_148972904732828_500285319027745444_n.jpg?ccb=11-4&oh=01_AdRURBt8RuChEmMmUUyj1-EdPNo9LjNiXT259qfAnckVPA&oe=644ABF00"
+            src={checkProfilePhoto(user.photoURL)}
           />
+
+          <ProfilePhotoOptionsMenu />
         </div>
 
         <UpdateProfileForm />

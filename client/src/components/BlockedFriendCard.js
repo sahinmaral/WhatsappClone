@@ -1,5 +1,5 @@
 import React from "react";
-import { unblockUserFromBlockedFriends } from "../services/firebase";
+import { unblockUserFromBlockedFriends } from "../services/firebase-auth";
 import { toast } from "react-toastify";
 
 function BlockedFriendCard({ blockedFriend }) {

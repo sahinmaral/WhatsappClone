@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import WhatsappIcons from "../icons/WhatsappIcons";
-import { sendMessage } from "../services/firebase";
+import { sendMessage } from "../services/firebase-auth";
 import { toast } from "react-toastify";
 
 function MessageTypePanel({ clickedChat }) {

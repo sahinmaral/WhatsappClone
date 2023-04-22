@@ -1,6 +1,6 @@
 import React from "react";
-import { handleFriendRequest } from "../services/firebase";
-import FriendRequestState from "../constants/friendRequestState";
+import { handleFriendRequest } from "../services/firebase-auth";
+import {FRIEND_REQUEST_STATES} from "../constants";
 
 function FriendRequestCard({ friendRequest }) {
   return (
@@ -19,7 +19,7 @@ function FriendRequestCard({ friendRequest }) {
         <button
           type="button"
           onClick={() => {
-            handleFriendRequest(FriendRequestState.ACCEPTED, friendRequest);
+            handleFriendRequest(FRIEND_REQUEST_STATES.ACCEPTED, friendRequest);
           }}
           className="focus:outline-none text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 mb-2"
         >
@@ -29,7 +29,7 @@ function FriendRequestCard({ friendRequest }) {
           type="button"
           className="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 mb-2 "
           onClick={() => {
-            handleFriendRequest(FriendRequestState.DECLINED, friendRequest);
+            handleFriendRequest(FRIEND_REQUEST_STATES.DECLINED, friendRequest);
           }}
         >
           Decline
@@ -38,7 +38,7 @@ function FriendRequestCard({ friendRequest }) {
           type="button"
           className="focus:outline-none text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
           onClick={() => {
-            handleFriendRequest(FriendRequestState.BLOCKED, friendRequest);
+            handleFriendRequest(FRIEND_REQUEST_STATES.BLOCKED, friendRequest);
           }}
         >
           Block

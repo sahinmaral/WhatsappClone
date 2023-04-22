@@ -1,9 +1,8 @@
 import React from "react";
-import { LeftPanelStates, ModalStates } from "../constants/componentStates";
+import { LEFT_PANEL_STATES, MODAL_STATES } from "../constants";
 import { useDispatch, useSelector } from "react-redux";
 import WhatsappIcons from "../icons/WhatsappIcons";
 import { setLeftPanelState, setModalState } from "../redux/reducers/chatSlice";
-import ThemeModalContent from "./ThemeModalContent";
 
 function SettingsLeftPanel() {
   const dispatch = useDispatch();
@@ -13,7 +12,7 @@ function SettingsLeftPanel() {
   const handleChangeModal = () => {
     dispatch(
       setModalState({
-        id: ModalStates.THEME_MODAL,
+        id: MODAL_STATES.THEME_MODAL,
         isOpened: !modalState.isOpened,
         header: "Theme",
       })
@@ -21,14 +20,14 @@ function SettingsLeftPanel() {
   };
 
   const handleChangeLeftState = () => {
-    dispatch(setLeftPanelState(LeftPanelStates.CHAT_WALLPAPER))
+    dispatch(setLeftPanelState(LEFT_PANEL_STATES.CHAT_WALLPAPER))
   }
 
   return (
     <>
       <div className="flex pr-[5px] pl-[20px] py-[35.5px] bg-whatsapp-green-panel">
         <div
-          onClick={() => dispatch(setLeftPanelState(LeftPanelStates.DEFAULT))}
+          onClick={() => dispatch(setLeftPanelState(LEFT_PANEL_STATES.DEFAULT))}
         >
           <WhatsappIcons
             type="left-arrow"
@@ -45,7 +44,7 @@ function SettingsLeftPanel() {
       <div
         className="settings-panel flex mt-5 pl-5 py-5 hover:bg-gray-200 hover:cursor-pointer"
         onClick={() => {
-          dispatch(setLeftPanelState(LeftPanelStates.UPDATE_PROFILE));
+          dispatch(setLeftPanelState(LEFT_PANEL_STATES.UPDATE_PROFILE));
         }}
       >
         <img

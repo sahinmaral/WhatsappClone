@@ -1,10 +1,9 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setLeftPanelState } from "../redux/reducers/chatSlice";
-import { LeftPanelStates } from "../constants/componentStates";
 import WhatsappIcons from "../icons/WhatsappIcons";
-import WallpaperColors from "../constants/wallpaperColors";
-import { updateUserSavedWallpaperColor } from "../services/firebase";
+import {WALLPAPER_COLORS,LEFT_PANEL_STATES} from "../constants";
+import { updateUserSavedWallpaperColor } from "../services/firebase-auth";
 import { toast } from "react-toastify";
 
 function WallpaperChangeLeftPanel() {
@@ -30,7 +29,7 @@ function WallpaperChangeLeftPanel() {
     <>
       <div className="flex pr-[5px] pl-[20px] py-[35.5px] bg-whatsapp-green-panel">
         <div
-          onClick={() => dispatch(setLeftPanelState(LeftPanelStates.DEFAULT))}
+          onClick={() => dispatch(setLeftPanelState(LEFT_PANEL_STATES.DEFAULT))}
         >
           <WhatsappIcons
             type="left-arrow"
@@ -44,7 +43,7 @@ function WallpaperChangeLeftPanel() {
         </span>
       </div>
       <div className="grid md:gap-x-1 gap-3 md:grid-cols-3 grid-cols-2 pl-5 pt-5">
-        {WallpaperColors.map((color) => {
+        {WALLPAPER_COLORS.map((color) => {
           return (
             <div
               className={`w-[82px] h-[82px] cursor-pointer ${

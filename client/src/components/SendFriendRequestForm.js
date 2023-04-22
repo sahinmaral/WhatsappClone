@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import WhatsappIcons from "../icons/WhatsappIcons";
-import { sendFriendRequest } from "../services/firebase";
+import { sendFriendRequest } from "../services/firebase-auth";
 import { toast } from "react-toastify";
 
 function SendFriendRequestForm() {

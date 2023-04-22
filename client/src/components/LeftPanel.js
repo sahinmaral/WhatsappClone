@@ -1,7 +1,7 @@
 import DefaultLeftPanelContent from "./DefaultLeftPanelContent";
 import UpdateProfile from "./UpdateProfile";
 import { useSelector } from "react-redux";
-import { LeftPanelStates } from "../constants/componentStates";
+import { LEFT_PANEL_STATES } from "../constants";
 import SettingsLeftPanel from "../components/SettingsLeftPanel";
 import WallpaperChangeLeftPanel from "./WallpaperChangeLeftPanel";
 import AddFriendLeftPanel from "./AddFriendLeftPanel";
@@ -14,15 +14,15 @@ function LeftPanel() {
     <div className={`left-panel panel`}>
       {(() => {
         switch (leftPanelState) {
-          case LeftPanelStates.UPDATE_PROFILE:
+          case LEFT_PANEL_STATES.UPDATE_PROFILE:
             return <UpdateProfile />;
-          case LeftPanelStates.SETTINGS:
+          case LEFT_PANEL_STATES.SETTINGS:
             return <SettingsLeftPanel />;
-          case LeftPanelStates.CHAT_WALLPAPER:
+          case LEFT_PANEL_STATES.CHAT_WALLPAPER:
             return <WallpaperChangeLeftPanel />;
-          case LeftPanelStates.ADD_FRIEND:
+          case LEFT_PANEL_STATES.ADD_FRIEND:
             return <AddFriendLeftPanel />;
-            case LeftPanelStates.SHOW_BLOCKED_FRIENDS:
+            case LEFT_PANEL_STATES.SHOW_BLOCKED_FRIENDS:
               return <ShowBlockedFriendsLeftPanel />
           default:
             return <DefaultLeftPanelContent />;

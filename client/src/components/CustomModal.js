@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setModalState } from "../redux/reducers/chatSlice";
-import { ModalStates } from "../constants/componentStates";
+import { MODAL_STATES } from "../constants";
 
 function CustomModal({ children }) {
   const dispatch = useDispatch();
@@ -10,7 +10,7 @@ function CustomModal({ children }) {
   const handleCloseModal = () => {
     dispatch(
       setModalState({
-        id: ModalStates.NONE,
+        id: MODAL_STATES.NONE,
         header: "",
         isOpened: false,
       })

@@ -1,9 +1,9 @@
 import { useFormik } from "formik";
-import React from "react";
+import React, { useRef } from "react";
 import { useSelector } from "react-redux";
 import WhatsappIcons from "../icons/WhatsappIcons";
 import { useState } from "react";
-import { updateUserAbout, updateUsername } from "../services/firebase";
+import { updateUserAbout, updateUsername } from "../services/firebase-auth";
 import { toast } from "react-toastify";
 
 function UpdateProfileForm() {
@@ -13,6 +13,8 @@ function UpdateProfileForm() {
     nameStateEnabled: true,
     aboutStateEnabled: false,
   });
+
+  const aboutInputRef = useRef();
 
   const nameFormik = useFormik({
     initialValues: {
@@ -168,13 +170,17 @@ function UpdateProfileForm() {
                 <div
                   id="about"
                   contentEditable={formStates.aboutStateEnabled}
-                  onChange={aboutFormik.handleChange}
-                  onBlur={aboutFormik.handleBlur}
-                  value={aboutFormik.values.about}
+                  ref={aboutInputRef}
+                  onInput={(event) => {
+                    aboutFormik.values.about = event.target.innerHTML;
+                  }}
+                  suppressContentEditableWarning={true}
                   className={`${
                     formStates.aboutStateEnabled && "border-b-2"
                   } bg-white text-green-900 block w-[450px] p-2.5 pr-[30px] dark:text-white border-0 focus:outline-none focus:ring-0 focus:border-whatsapp-green`}
-                ></div>
+                >
+                  {aboutFormik.values.about}
+                </div>
               </div>
             </div>
           </form>
