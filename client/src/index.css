@@ -2,12 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  margin: 0;
-  padding: 0;
-}
-
 @layer components {
+  body{
+    @apply m-0 p-0;
+  }
+
   .main-content {
     @apply relative max-[1440px]:overflow-hidden flex max-[1440px]:mx-0 max-[1540px]:mx-[20px] max-[1740px]:mx-[50px] mx-[100px] max-[1440px]:pb-0 pb-[15px] h-screen;
   }
@@ -27,6 +26,8 @@ body {
   .default-left-panel .profile-photo,
   .settings-panel .profile-photo,
   .right-panel .chat-thumbnail,
+  .friend-requests .profile-photo,
+  .blocked-friends .profile-photo,
   .update-profile-panel .profile-photo {
     @apply cursor-pointer  rounded-full;
   }
@@ -40,8 +41,13 @@ body {
     @apply w-[200px] h-[200px];
   }
 
-  .settings-panel .profile-photo{
+  .settings-panel .profile-photo {
     @apply w-[82px] h-[82px];
+  }
+
+  .friend-requests .profile-photo,
+  .blocked-friends .profile-photo {
+    @apply w-[35px] h-[35px] mr-2;
   }
 
   .right-panel .chat-thumbnail {
@@ -65,7 +71,7 @@ body {
   }
 
   .message-list {
-    @apply pb-5 lg:h-[85%] h-[85%] flex flex-col-reverse overflow-y-auto ml-[20px];
+    @apply pb-5 lg:h-[85%] h-[85%] flex flex-col overflow-y-auto ml-[20px] transform;
   }
 
   .message-list .message-card {

@@ -1,0 +1,51 @@
+import React from "react";
+import { handleFriendRequest } from "../services/firebase";
+import FriendRequestState from "../constants/friendRequestState";
+
+function FriendRequestCard({ friendRequest }) {
+  return (
+    <>
+      <div className="flex mb-4">
+        <img
+          className="profile-photo"
+          alt="requested-user"
+          src="https://pps.whatsapp.net/v/t61.24694-24/328164465_148972904732828_500285319027745444_n.jpg?stp=dst-jpg_s96x96&ccb=11-4&oh=01_AdTw3igtl-klhImjPUoBj0zOsjFx963YLUD-VWyCCyy8qA&oe=64477340"
+        />
+        <p className="pt-[6px] text-gray-600 text-[0.9em] font-normal">
+          {friendRequest.user.email}
+        </p>
+      </div>
+      <div className="flex">
+        <button
+          type="button"
+          onClick={() => {
+            handleFriendRequest(FriendRequestState.ACCEPTED, friendRequest);
+          }}
+          className="focus:outline-none text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 mb-2"
+        >
+          Accept
+        </button>
+        <button
+          type="button"
+          className="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 mb-2 "
+          onClick={() => {
+            handleFriendRequest(FriendRequestState.DECLINED, friendRequest);
+          }}
+        >
+          Decline
+        </button>
+        <button
+          type="button"
+          className="focus:outline-none text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
+          onClick={() => {
+            handleFriendRequest(FriendRequestState.BLOCKED, friendRequest);
+          }}
+        >
+          Block
+        </button>
+      </div>
+    </>
+  );
+}
+
+export default FriendRequestCard;

@@ -20,11 +20,30 @@ function DefaultLeftPanelContent() {
           <MyProfileDescription />
         </div>
         <div className="options">
-          <WhatsappIcons
-            type="social"
-            style={`mx-2 mt-[0.3em] text-[#54656F]`}
-          />
-          <WhatsappIcons type="message" style={`mx-2 mt-2 text-[#54656F]`} />
+          <span
+            onClick={() =>
+              dispatch(setLeftPanelState(LeftPanelStates.ADD_FRIEND))
+            }
+          >
+            <WhatsappIcons
+              type="add-friend"
+              width="20"
+              height="20"
+              style={`mx-2 mt-[0.5em] text-[#54656F]`}
+            />
+          </span>
+          <span
+            onClick={() =>
+              dispatch(setLeftPanelState(LeftPanelStates.SHOW_BLOCKED_FRIENDS))
+            }
+          >
+            <WhatsappIcons
+              type="blocked-users"
+              width="24"
+              height="24"
+              style={`mx-2 mt-[0.5em]`}
+            />
+          </span>
           <DefaultLeftPanelOptionsMenu />
         </div>
       </div>
@@ -41,7 +60,9 @@ function DefaultLeftPanelContent() {
             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
               <WhatsappIcons
                 type="search"
-                style={`w-4 h-4 text-gray-500 dark:text-gray-400`}
+                width="24"
+                height="24"
+                style={`text-gray-500 dark:text-gray-400`}
               />
             </div>
             <input

@@ -2,7 +2,7 @@ import React from "react";
 import WhatsappBanner from "../../images/whatsapp-banner.png";
 import { useFormik } from "formik";
 import { LoginSchema } from "../../schema";
-import { loginWithUsername } from "../../services/firebase";
+import { loginWithEmail } from "../../services/firebase";
 import { toast } from "react-toastify";
 import { returnLocalizatedError } from "../../constants/firebaseErrors";
 import { Link, useNavigate } from "react-router-dom";
@@ -22,7 +22,7 @@ function Login() {
     },
     validationSchema: LoginSchema,
     onSubmit: (values) => {
-      loginWithUsername(values.email, values.password)
+      loginWithEmail(values.email, values.password)
         .then((user) => {
           dispatch(
             login({

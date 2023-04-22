@@ -12,6 +12,8 @@ const initialState = {
   theme: "light",
   messages: [],
   clickedChat: null,
+  friendRequests: [],
+  sentFriendRequests : []
 };
 
 export const chatSlice = createSlice({
@@ -36,6 +38,12 @@ export const chatSlice = createSlice({
     setClickedChat: (state, action) => {
       state.clickedChat = action.payload;
     },
+    setFriendRequests : (state,action) => {
+      state.friendRequests = action.payload
+    },
+    setSentFriendRequests : (state,action) => {
+      state.sentFriendRequests = action.payload
+    }
   },
 });
 
@@ -46,6 +54,8 @@ export const {
   setTheme,
   setMessages,
   setClickedChat,
+  setFriendRequests,
+  setSentFriendRequests
 } = chatSlice.actions;
 
 export default chatSlice.reducer;

@@ -24,11 +24,23 @@ export const authSlice = createSlice({
     setFriends: (state, action) => {
       state.friends = action.payload;
     },
-
+    setSavedWallpaperColor: (state, action) => {
+      state.user.savedWallpaperColor = action.payload;
+    },
+    setBlockedFriends: (state, action) => {
+      state.user.blockedFriends = action.payload;
+    },
   },
 });
 
-export const { login, logOut, setAbout, setUsername, setFriends , } =
-  authSlice.actions;
+export const {
+  login,
+  logOut,
+  setAbout,
+  setUsername,
+  setFriends,
+  setSavedWallpaperColor,
+  setBlockedFriends,
+} = authSlice.actions;
 
 export default authSlice.reducer;

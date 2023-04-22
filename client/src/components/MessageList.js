@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import MessageCard from "./MessageCard";
 import { useSelector } from "react-redux";
 
@@ -6,8 +6,14 @@ function MessageList() {
   const { messages, clickedChat } = useSelector((state) => state.chat);
   const { user } = useSelector((state) => state.auth);
 
+  const divRef = useRef();
+
+  useEffect(() => {
+    divRef.current.scrollTop = divRef.current.scrollHeight;
+  }, [messages]);
+
   return (
-    <div className="message-list">
+    <div className="message-list" ref={divRef}>
       {messages
         .filter(
           (messageItem) =>
