@@ -143,6 +143,7 @@ export const logOutUser = () => {
     store.dispatch(setSentFriendRequests([]));
     store.dispatch(setMessages([]));
     store.dispatch(setFriends([]));
+    store.dispatch(setIsLoading(false))
   });
 };
 

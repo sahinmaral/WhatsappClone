@@ -30,7 +30,7 @@ function MessageTypePanel({ clickedChat }) {
   const [message, setMessage] = useState("");
 
   return (
-    <div className="flex items-center bottom-4 pl-4 pt-2 pb-4 mt-0 bg-[#F0F2F5] dark:bg-whatsapp-green-dark-2">
+    <div className="flex items-center bottom-4 pl-4 pt-4 pb-4 mt-0 bg-[#F0F2F5] dark:bg-whatsapp-green-dark-2">
       <WhatsappIcons
         type="emoji"
         style={`mt-2 text-[#54656F] dark:text-[#AEBAC1]`}
