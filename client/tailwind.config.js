@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
@@ -9,6 +10,8 @@ module.exports = {
         "whatsapp-green-chat": "#D9FDD3",
         "whatsapp-green-panel": "#008069",
         "whatsapp-gray-icon": "#8696a0",
+        "whatsapp-green-dark": "#111B21",
+        "whatsapp-green-dark-2": "#202C33",
       },
       boxShadow: {
         "whatsapp-shadow":

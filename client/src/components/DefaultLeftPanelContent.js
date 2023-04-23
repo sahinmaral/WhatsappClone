@@ -3,7 +3,7 @@ import WhatsappIcons from "../icons/WhatsappIcons";
 import MyProfileDescription from "./MyProfileDescription";
 import { setLeftPanelState } from "../redux/reducers/chatSlice";
 import { LEFT_PANEL_STATES } from "../constants";
-import { useDispatch } from "react-redux";
+import { useDispatch} from "react-redux";
 import DefaultLeftPanelOptionsMenu from "./DefaultLeftPanelOptionsMenu";
 
 function DefaultLeftPanelContent() {
@@ -11,7 +11,7 @@ function DefaultLeftPanelContent() {
 
   return (
     <>
-      <div className="flex justify-between pr-[5px] pl-[20px] py-[15px] default-left-panel">
+      <div className="flex justify-between pr-[4px] pl-[20px] py-[15px] default-left-panel bg-[#F0F2F5] dark:bg-whatsapp-green-dark-2">
         <div
           onClick={() =>
             dispatch(setLeftPanelState(LEFT_PANEL_STATES.UPDATE_PROFILE))
@@ -27,35 +27,31 @@ function DefaultLeftPanelContent() {
           >
             <WhatsappIcons
               type="add-friend"
-              width="20"
-              height="20"
-              style={`mx-2 mt-[0.5em] text-[#54656F]`}
+              width="24"
+              height="24"
+              style={`mx-2 mt-[0.4em] text-[#54656F] dark:text-[#AEBAC1]`}
             />
           </span>
           <span
             onClick={() =>
-              dispatch(setLeftPanelState(LEFT_PANEL_STATES.SHOW_BLOCKED_FRIENDS))
+              dispatch(
+                setLeftPanelState(LEFT_PANEL_STATES.SHOW_BLOCKED_FRIENDS)
+              )
             }
           >
             <WhatsappIcons
               type="blocked-users"
               width="24"
               height="24"
-              style={`mx-2 mt-[0.5em]`}
+              style={`mx-2 mt-[0.5em] text-[#54656F] dark:text-[#AEBAC1]`}
             />
           </span>
           <DefaultLeftPanelOptionsMenu />
         </div>
       </div>
 
-      <div className="flex bg-white h-[50px] px-[10px] py-[8px]">
+      <div className="flex h-[51px] px-[10px] py-[8px] bg-white dark:bg-whatsapp-green-dark">
         <form className="w-full">
-          <label
-            htmlFor="default-search"
-            className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-          >
-            Search
-          </label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
               <WhatsappIcons
@@ -68,14 +64,17 @@ function DefaultLeftPanelContent() {
             <input
               type="search"
               id="default-search"
-              className="block w-full text-[12px] p-4 pl-10 text-sm h-[20px] text-gray-900 rounded-lg bg-[#F0F2F5] focus:outline-none"
+              autoComplete="off"
+              className="block w-full text-[12px] p-4 pl-10 text-sm h-[20px] text-gray-900 dark:text-gray-400 rounded-lg focus:outline-none bg-[#F0F2F5] dark:bg-whatsapp-green-dark-2"
               placeholder="Search or start new chat"
-              required
             />
           </div>
         </form>
 
-        <WhatsappIcons type="filter" style={`ml-2 mt-0 text-[#54656F]`} />
+        <WhatsappIcons
+          type="filter"
+          style={`ml-2 mt-0 text-[#54656F] dark:text-[#AEBAC1]`}
+        />
       </div>
 
       <ChatList />

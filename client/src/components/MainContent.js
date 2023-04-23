@@ -6,14 +6,13 @@ import { MODAL_STATES } from "../constants";
 import ThemeModalContent from "./ThemeModalContent";
 
 function MainContent() {
-  const { modalState,clickedChat } = useSelector((state) => state.chat);
-
+  const { modalState, clickedChat } = useSelector((state) => state.chat);
 
   return (
     <>
       <div
         className={`main-content ${
-          modalState.id !== MODAL_STATES.NONE && "blur-sm"
+          modalState.id !== MODAL_STATES.NONE ? "blur-sm" : "blur-none"
         }`}
       >
         <LeftPanel />

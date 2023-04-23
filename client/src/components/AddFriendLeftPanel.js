@@ -10,14 +10,14 @@ function AddFriendLeftPanel() {
   const dispatch = useDispatch();
 
   return (
-    <>
-      <div className="flex pr-[5px] pl-[20px] py-[35.5px] bg-whatsapp-green-panel">
+    <div className="bg-white dark:bg-whatsapp-green-dark h-full">
+      <div className="flex pr-[5px] pl-[20px] py-[23.5px] bg-whatsapp-green-panel dark:bg-whatsapp-green-dark-2">
         <div
           onClick={() => dispatch(setLeftPanelState(LEFT_PANEL_STATES.DEFAULT))}
         >
           <WhatsappIcons
             type="left-arrow"
-            style={`mx-2 mt-2  text-white`}
+            style={`mx-2 mt-2 text-white`}
             width="24"
             height="24"
           />
@@ -30,7 +30,7 @@ function AddFriendLeftPanel() {
       <SendFriendRequestForm />
 
       <FriendRequestList />
-    </>
+    </div>
   );
 }
 

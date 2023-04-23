@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
+import { selectUser } from "../redux/reducers/authSlice";
 
 function MessageCard({ message, createdAt, fromWho }) {
   const createdAtConverted = new Date(Date.parse(createdAt));
@@ -24,10 +26,22 @@ function MessageCard({ message, createdAt, fromWho }) {
     )} AM`;
   }
 
+  const { savedTheme } = useSelector(selectUser);
+
   return (
-    <div className={`message-card ${fromWho}`}>
-      <span className="text-[12.5px] block text-gray-600">{message}</span>
-      <span className="text-[11px] block float-right text-gray-600">
+    <div className={`message-card ${fromWho} ${savedTheme}`}>
+      <span
+        className={`text-[12.5px] block ${
+          savedTheme === "light" ? "text-gray-600" : "text-[#E9EDEF]"
+        }`}
+      >
+        {message}
+      </span>
+      <span
+        className={`text-[11px] block float-right ${
+          savedTheme === "light" ? "text-gray-600" : "text-[#FFFFFF99]"
+        }`}
+      >
         {createdAtFormatted}
       </span>
     </div>

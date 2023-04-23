@@ -60,7 +60,7 @@ function SendFriendRequestForm() {
           <input
             type="email"
             ref={emailInputRef}
-            className="block w-full text-[12px] p-4 pl-10 text-sm h-[20px] text-gray-900 rounded-lg bg-white focus:outline-none"
+            className="block w-full text-[12px] p-4 pl-10 text-sm h-[20px] text-gray-900 dark:text-gray-400 rounded-lg bg-[#F0F2F5] dark:bg-whatsapp-green-dark-2 focus:outline-none"
             placeholder="E-mail address"
           />
         </div>

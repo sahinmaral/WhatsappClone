@@ -12,8 +12,8 @@ function UpdateProfile() {
 
 
   return (
-    <>
-      <div className="flex pr-[5px] pl-[20px] py-[35.5px] bg-whatsapp-green-panel">
+    <div className="dark:bg-whatsapp-green-dark bg-[#F0F2F5] h-full">
+      <div className="flex pr-[5px] pl-[20px] py-[23.5px] bg-whatsapp-green-panel dark:bg-whatsapp-green-dark-2">
         <div
           onClick={() => dispatch(setLeftPanelState(LEFT_PANEL_STATES.DEFAULT))}
         >
@@ -33,6 +33,7 @@ function UpdateProfile() {
         <div className="flex justify-center py-7">
           <img
             className="profile-photo"
+            alt="update-profile-thumbnail"
             src={checkProfilePhoto(user.photoURL)}
           />
 
@@ -41,7 +42,7 @@ function UpdateProfile() {
 
         <UpdateProfileForm />
       </div>
-    </>
+    </div>
   );
 }
 

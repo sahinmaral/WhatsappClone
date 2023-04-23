@@ -9,11 +9,10 @@ const initialState = {
     header: "",
     isOpened: false,
   },
-  theme: "light",
   messages: [],
   clickedChat: null,
   friendRequests: [],
-  sentFriendRequests : []
+  sentFriendRequests: [],
 };
 
 export const chatSlice = createSlice({
@@ -29,21 +28,18 @@ export const chatSlice = createSlice({
     setModalState: (state, action) => {
       state.modalState = action.payload;
     },
-    setTheme: (state, action) => {
-      state.theme = action.payload;
-    },
     setMessages: (state, action) => {
       state.messages = action.payload;
     },
     setClickedChat: (state, action) => {
       state.clickedChat = action.payload;
     },
-    setFriendRequests : (state,action) => {
-      state.friendRequests = action.payload
+    setFriendRequests: (state, action) => {
+      state.friendRequests = action.payload;
     },
-    setSentFriendRequests : (state,action) => {
-      state.sentFriendRequests = action.payload
-    }
+    setSentFriendRequests: (state, action) => {
+      state.sentFriendRequests = action.payload;
+    },
   },
 });
 
@@ -51,11 +47,10 @@ export const {
   setIsLoading,
   setLeftPanelState,
   setModalState,
-  setTheme,
   setMessages,
   setClickedChat,
   setFriendRequests,
-  setSentFriendRequests
+  setSentFriendRequests,
 } = chatSlice.actions;
 
 export default chatSlice.reducer;

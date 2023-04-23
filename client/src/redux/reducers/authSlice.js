@@ -24,15 +24,18 @@ export const authSlice = createSlice({
     setFriends: (state, action) => {
       state.friends = action.payload;
     },
-    setSavedWallpaperColor: (state, action) => {
-      state.user.savedWallpaperColor = action.payload;
+    setSavedWallpaperColorID: (state, action) => {
+      state.user.savedWallpaperColorID = action.payload;
     },
     setBlockedFriends: (state, action) => {
       state.user.blockedFriends = action.payload;
     },
-    setProfilePhoto : (state,action) => {
-      state.user.photoURL = action.payload
-    }
+    setProfilePhoto: (state, action) => {
+      state.user.photoURL = action.payload;
+    },
+    setSavedTheme: (state, action) => {
+      state.user.savedTheme = action.payload;
+    },
   },
 });
 
@@ -42,9 +45,12 @@ export const {
   setAbout,
   setUsername,
   setFriends,
-  setSavedWallpaperColor,
+  setSavedTheme,
+  setSavedWallpaperColorID,
   setBlockedFriends,
-  setProfilePhoto
+  setProfilePhoto,
 } = authSlice.actions;
+
+export const selectUser = (state) => state.auth.user;
 
 export default authSlice.reducer;

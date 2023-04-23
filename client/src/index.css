@@ -16,7 +16,7 @@
   }
 
   .left-panel {
-    @apply w-[640px] bg-[#F0F2F5] border-r-[1px] border-slate-200;
+    @apply w-[440px] lg:w-[640px];
   }
 
   .left-panel .options {
@@ -27,8 +27,7 @@
   .settings-panel .profile-photo,
   .right-panel .chat-thumbnail,
   .friend-requests .profile-photo,
-  .blocked-friends .profile-photo,
-  .update-profile-panel .profile-photo {
+  .blocked-friends .profile-photo{
     @apply cursor-pointer  rounded-full;
   }
 
@@ -38,7 +37,7 @@
   }
 
   .update-profile-panel .profile-photo {
-    @apply w-[200px] h-[200px];
+    @apply w-[200px] h-[200px] rounded-full;
   }
 
   .settings-panel .profile-photo {
@@ -63,15 +62,15 @@
   }
 
   .chat-list {
-    @apply overflow-y-auto overflow-x-hidden mb-[200px] h-[calc(100vh-100%)] max-[1440px]:min-h-[calc(100vh-110px)] min-h-[calc(100vh-140px)] bg-white;
+    @apply overflow-y-auto overflow-x-hidden mb-[200px] h-[calc(100vh-100%)] max-[1440px]:min-h-[calc(100vh-110px)] min-h-[calc(100vh-140px)];
   }
 
   .chat-list .chat-card {
-    @apply flex items-center gap-2 p-4 pl-3 hover:cursor-pointer hover:bg-[#F5F6F6];
+    @apply flex items-center gap-2 py-4 pl-3 hover:cursor-pointer;
   }
 
   .message-list {
-    @apply pb-5 lg:h-[85%] h-[85%] flex flex-col overflow-y-auto ml-[20px] transform;
+    @apply pb-5 lg:h-[85%] h-[85%] flex flex-col-reverse overflow-y-auto ml-[20px];
   }
 
   .message-list .message-card {
@@ -82,8 +81,16 @@
     @apply ml-2 mr-2;
   }
 
+  .message-list .message-card.fromOther.dark{
+    @apply bg-whatsapp-green-dark-2;
+  }
+
   .message-list .message-card.fromMe {
     @apply ml-auto mr-[20px] bg-whatsapp-green-chat;
+  }
+
+  .message-list .message-card.fromMe.dark{
+    @apply bg-whatsapp-green-panel;
   }
 
   input.not-validated {

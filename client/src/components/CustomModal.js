@@ -35,7 +35,7 @@ function CustomModal({ children }) {
         <div className="mx-auto mt-[300px] relative w-full max-w-lg px-4 h-full md:h-auto">
           <div className="bg-white rounded-lg shadow relative dark:bg-gray-700">
             <div className="flex items-start justify-between px-5 pt-5 rounded-t dark:border-gray-600">
-              <h3 className="text-[#3B4A54] text-[20px] font-normal">
+              <h3 className="text-[#3B4A54] dark:text-white text-[20px] font-normal">
                 {modalState.header}
               </h3>
             </div>

@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setModalState, setTheme } from "../redux/reducers/chatSlice";
+import { setModalState } from "../redux/reducers/chatSlice";
 import { MODAL_STATES } from "../constants";
+import { updateUserTheme } from "../services/firebase-auth";
 
 function ThemeModalContent() {
-  const { theme } = useSelector((state) => state.chat);
+  const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
+  const [savedTheme, setSavedTheme] = useState(user.savedTheme);
+
   const handleSubmit = () => {
-    dispatch(setTheme(selectedTheme));
+    updateUserTheme(savedTheme);
   };
 
   const handleCloseModal = () => {
@@ -21,8 +24,6 @@ function ThemeModalContent() {
     );
   };
 
-  const [selectedTheme, setSelectedTheme] = useState(theme);
-
   return (
     <>
       <div className="flex items-center mb-4">
@@ -31,9 +32,9 @@ function ThemeModalContent() {
           type="radio"
           value="light"
           name="light"
-          checked={selectedTheme === "light"}
+          checked={savedTheme === "light"}
           onChange={() => {
-            setSelectedTheme("light");
+            setSavedTheme("light");
           }}
           className="w-[21px] h-[21px] accent-whatsapp-green-panel focus:whatsapp-green-panel"
         />
@@ -51,9 +52,9 @@ function ThemeModalContent() {
           value="dark"
           name="dark"
           onChange={() => {
-            setSelectedTheme("dark");
+            setSavedTheme("dark");
           }}
-          checked={selectedTheme === "dark"}
+          checked={savedTheme === "dark"}
           className="w-[21px] h-[21px] accent-whatsapp-green-panel focus:whatsapp-green-panel"
         />
         <label
@@ -63,7 +64,7 @@ function ThemeModalContent() {
           Dark
         </label>
       </div>
-      <div className="flex items-center mb-4">
+      {/* <div className="flex items-center mb-4">
         <input
           id="system-default"
           type="radio"
@@ -81,14 +82,14 @@ function ThemeModalContent() {
         >
           System Default
         </label>
-      </div>
+      </div> */}
       <div className="button-group float-right">
         <button
           type="button"
           onClick={() => {
             handleCloseModal(false);
           }}
-          className="text-whatsapp-green-panel bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 font-medium rounded-full text-sm px-5 py-2.5 mr-2 mb-2"
+          className="text-whatsapp-green-panel bg-white focus:outline-none hover:bg-gray-100 focus:ring-4 font-medium rounded-full text-sm px-5 py-2.5 mr-2 mb-2"
         >
           Cancel
         </button>

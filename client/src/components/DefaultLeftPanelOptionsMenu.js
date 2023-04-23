@@ -21,10 +21,13 @@ function DefaultLeftPanelOptionsMenu() {
     <>
       <div className="inline-block relative">
         <span onClick={handleDropDown}>
-          <WhatsappIcons type="three-dot" style={`mx-2 mt-2 text-[#54656F]`} />
+          <WhatsappIcons
+            type="three-dot"
+            style={`mx-2 mt-2 text-[#54656F] dark:text-[#AEBAC1]`}
+          />
         </span>
         <ul
-          className={`bg-white whatsapp-shadow w-[150px] absolute ml-[-120px] mt-2 pt-1 z-10 ${
+          className={`bg-white dark:bg-whatsapp-green-dark-2 whatsapp-shadow w-[150px] absolute ml-[-120px] mt-2 z-10 ${
             isOpen ? "block" : "hidden"
           }`}
         >
@@ -33,13 +36,13 @@ function DefaultLeftPanelOptionsMenu() {
               dispatch(setLeftPanelState(LEFT_PANEL_STATES.SETTINGS));
             }}
           >
-            <span className="cursor-pointer rounded-t bg-white hover:bg-gray-200 py-4 pl-5 block whitespace-no-wrap">
+            <span className="cursor-pointer rounded-t text-black dark:text-white bg-white dark:bg-whatsapp-green-dark-2 hover:bg-gray-200 hover:dark:bg-whatsapp-green-dark py-4 pl-5 block whitespace-no-wrap">
               Settings
             </span>
           </li>
           <li>
             <span
-              className="rounded-t cursor-pointer bg-white hover:bg-gray-200 py-4 pl-5 block whitespace-no-wrap"
+              className="rounded-t cursor-pointer text-black dark:text-white bg-white dark:bg-whatsapp-green-dark-2 hover:bg-gray-200 hover:dark:bg-whatsapp-green-dark py-4 pl-5 block whitespace-no-wrap"
               onClick={() => {
                 logOutUser();
                 navigate("/auth/login");

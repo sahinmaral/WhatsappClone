@@ -24,7 +24,8 @@ import {
   setBlockedFriends,
   setFriends,
   setProfilePhoto,
-  setSavedWallpaperColor,
+  setSavedTheme,
+  setSavedWallpaperColorID,
   setUsername,
 } from "../redux/reducers/authSlice";
 import store from "../redux/store";
@@ -35,7 +36,11 @@ import {
   setSentFriendRequests,
 } from "../redux/reducers/chatSlice";
 import { v4 as uuidv4 } from "uuid";
-import { FRIEND_REQUEST_STATES, checkProfilePhoto } from "../constants";
+import {
+  FRIEND_REQUEST_STATES,
+  NO_LAST_MESSAGE,
+  checkProfilePhoto,
+} from "../constants";
 import { db, db_realTime, auth } from "./firebase";
 import { uploadPhoto, removePhoto } from "./firebase-storage";
 
@@ -71,8 +76,9 @@ export const setCurrentUser = () => {
             username: userDetailed.username,
             email: userDetailed.email,
             about: userDetailed.about,
-            savedWallpaperColor: userDetailed.savedWallpaperColor,
+            savedWallpaperColorID: userDetailed.savedWallpaperColorID,
             photoURL: userDetailed.photoURL,
+            savedTheme: userDetailed.savedTheme,
             blockedFriends: [],
           })
         );
@@ -193,16 +199,34 @@ export const updateUserAbout = (about) => {
   }
 };
 
-export const updateUserSavedWallpaperColor = (color) => {
+export const updateUserSavedWallpaperColorID = (colorID) => {
   const currentUser = auth.currentUser;
 
   return new Promise((resolve, reject) => {
     const userRef = doc(db, "users", currentUser.uid);
     updateDoc(userRef, {
-      savedWallpaperColor: color,
+      savedWallpaperColorID: colorID,
     })
       .then(() => {
-        store.dispatch(setSavedWallpaperColor(color));
+        store.dispatch(setSavedWallpaperColorID(colorID));
+        resolve();
+      })
+      .catch((err) => {
+        reject(err.code);
+      });
+  });
+};
+
+export const updateUserTheme = (theme) => {
+  const currentUser = auth.currentUser;
+
+  return new Promise((resolve, reject) => {
+    const userRef = doc(db, "users", currentUser.uid);
+    updateDoc(userRef, {
+      savedTheme: theme,
+    })
+      .then(() => {
+        store.dispatch(setSavedTheme(theme));
         resolve();
       })
       .catch((err) => {
@@ -281,6 +305,77 @@ const fetchRealTimeUserProperties = () => {
   fetchFriends();
 };
 
+const fetchLastMessagesFromFriends = (friendsSnapshot) => {
+  const messagesRef = ref(db_realTime, "messages");
+  const currentUser = auth.currentUser;
+  onValue(messagesRef, (messageSnapShot) => {
+    if (messageSnapShot.exists()) {
+      const messages = messageSnapShot.val();
+
+      Promise.all(
+        friendsSnapshot.map((friendSnapShot) => {
+          const friend = friendSnapShot.data();
+
+          const dataQuery = query(
+            collection(db, "users"),
+            where("email", "==", friend.email)
+          );
+
+          return getDocs(dataQuery)
+            .then((snap) => {
+              return snap.docs[0];
+            })
+            .then((friendDetailed) => {
+              const lastMessageToOrFromFriend = Object.keys(messages)
+                .map((key) => {
+                  return { ...messages[key], id: key };
+                })
+                .filter(
+                  (message) =>
+                    (message.receiver === currentUser.uid &&
+                      message.sender === friendDetailed.id) ||
+                    (message.sender === currentUser.uid &&
+                      message.receiver === friendDetailed.id)
+                )
+                .sort(function (a, b) {
+                  return (
+                    new Date(Date.parse(b.createdAt)) -
+                    new Date(Date.parse(a.createdAt))
+                  );
+                })[0];
+
+              store.dispatch(
+                setFriends(
+                  friendsSnapshot.map((friendSnapShot) => {
+                    return {
+                      ...friendSnapShot.data(),
+                      lastMessage: lastMessageToOrFromFriend,
+                    };
+                  })
+                )
+              );
+            });
+        })
+      ).then(() => {
+        store.dispatch(setIsLoading(false));
+      });
+    } else {
+      store.dispatch(
+        setFriends(
+          store.getState().auth.friends.map((friend) => {
+            return {
+              ...friend,
+              lastMessage: NO_LAST_MESSAGE,
+            };
+          })
+        )
+      );
+
+      store.dispatch(setIsLoading(false));
+    }
+  });
+};
+
 const fetchFriends = () => {
   const currentUser = auth.currentUser;
 
@@ -296,57 +391,18 @@ const fetchFriends = () => {
             Object.values(friends).map((friend) => {
               return getDoc(doc(db, "users", friend.id));
             })
-          ).then((values) => {
-            store.dispatch(
-              setFriends(
-                values.map((value) => {
-                  return value.data();
-                })
-              )
-            );
-
-            store.dispatch(setIsLoading(false));
+          ).then((friendsSnapShot) => {
+            fetchLastMessagesFromFriends(friendsSnapShot);
           });
         } else {
           store.dispatch(setIsLoading(false));
         }
       });
     } else {
+      store.dispatch(setFriends([]));
       store.dispatch(setIsLoading(false));
     }
   });
-
-  // onValue(friendRef, (snapshot) => {
-  //   if (snapshot.exists()) {
-  //     const friends = snapshot.val();
-
-  //     if (
-  //       Object.keys(friends).filter((key) => key === currentUser.uid).length !==
-  //       0
-  //     ) {
-  //       Promise.all(
-  //         friends[currentUser.uid].map((id) => {
-  //           return getDoc(doc(db, "users", id));
-  //         })
-  //       ).then((values) => {
-
-  //         store.dispatch(
-  //           setFriends(
-  //             values.map((value) => {
-  //               return value.data();
-  //             })
-  //           )
-  //         );
-
-  //         store.dispatch(setIsLoading(false));
-  //       });
-  //     } else {
-  //       store.dispatch(setIsLoading(false));
-  //     }
-  //   } else {
-  //     store.dispatch(setIsLoading(false));
-  //   }
-  // });
 };
 
 const fetchMessages = () => {
@@ -366,13 +422,7 @@ const fetchMessages = () => {
           (message) =>
             message.receiver === currentUser.uid ||
             message.sender === currentUser.uid
-        )
-        .sort(function (a, b) {
-          return (
-            new Date(Date.parse(a.createdAt)) -
-            new Date(Date.parse(b.createdAt))
-          );
-        });
+        );
 
       messagesFiltered.forEach((messageItem) => {
         let messageDetailed = {
@@ -809,7 +859,7 @@ const fetchBlockedFriends = () => {
 const fetchFriendRequests = () => {
   const currentUser = auth.currentUser;
 
-  const friendRequestRef = ref(db_realTime, "/friendRequests");
+  const friendRequestRef = ref(db_realTime, "friendRequests");
 
   onValue(friendRequestRef, (snapshot) => {
     if (snapshot.exists()) {
@@ -924,7 +974,7 @@ const addFriendFromReceiver = (friends, currentUser, friendRequest) => {
     getDocs(dataQuery).then((value) => {
       update(ref(db_realTime, `friends/${currentUser.uid}`), {
         ...friends[currentUser.uid],
-        [friends[currentUser.uid].length]: value.docs[0].id,
+        [uuidv4()]: { id: value.docs[0].id },
       });
     });
   }
@@ -947,7 +997,7 @@ const addFriendFromSender = (friends, currentUser, friendRequest) => {
     } else {
       update(ref(db_realTime, `friends/${snapShot.docs[0].id}`), {
         ...friends[currentUser.uid],
-        [friends[currentUser.uid].length]: currentUser.uid,
+        [uuidv4()]: { id: currentUser.uid },
       });
     }
   });
