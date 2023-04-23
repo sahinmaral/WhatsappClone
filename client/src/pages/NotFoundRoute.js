@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function NotFoundRoute({ theme }) {
-  console.log(theme);
   return (
     <div className={`${theme === "dark" ? "dark" : ""}`}>
       <div className="h-screen flex flex-col text-center pt-[200px] dark:bg-whatsapp-green-dark-2">
@@ -13,7 +12,7 @@ function NotFoundRoute({ theme }) {
           Page Not Found
         </p>
         <Link to="/auth/login">
-          <span className="font-light text-[20px] pb-5 tracking-wider text-gray-500 hover:text-gray-800 dark:text-white dark:hover:text-gray-400">
+          <span className="font-light text-[20px] tracking-wider text-gray-500 hover:text-gray-800 dark:text-white dark:hover:text-gray-400">
             Redirect to login
           </span>
         </Link>

@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Register from "./pages/auth/Register";
 import Login from "./pages/auth/Login";
+import WelcomePage from "./pages/WelcomePage";
 import MainContainer from "./pages/MainContainer";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useSelector } from "react-redux";
@@ -33,6 +34,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<WelcomePage theme={browserTheme}/>} />
         <Route path="/auth/login" element={<Login theme={browserTheme}/>} />
         <Route path="/auth/register" element={<Register theme={browserTheme} />} />
         <Route
