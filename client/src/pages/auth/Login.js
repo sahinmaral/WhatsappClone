@@ -40,7 +40,7 @@ function Login({ theme }) {
             theme: "light",
           });
           setTimeout(() => {
-            navigate("/");
+            navigate("/profile");
           }, 5000);
         })
         .catch((error) => {

@@ -38,7 +38,7 @@ function App() {
         <Route path="/auth/login" element={<Login theme={browserTheme}/>} />
         <Route path="/auth/register" element={<Register theme={browserTheme} />} />
         <Route
-          path="/"
+          path="/profile"
           element={
             <ProtectedRoute user={user} isLoading={isLoading}>
               <MainContainer />
