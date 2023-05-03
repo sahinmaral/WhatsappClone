@@ -8,7 +8,7 @@ function MyProfileDescription() {
 
   return (
     <div className="flex flex-row">
-      <Link to="/">
+      <Link to="/profile">
         <img
           className="profile-photo"
           alt="user-thumbnail"

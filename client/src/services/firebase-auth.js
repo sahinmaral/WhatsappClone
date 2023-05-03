@@ -46,6 +46,7 @@ import { uploadPhoto, removePhoto } from "./firebase-storage";
 
 export const checkUser = () => {
   onAuthStateChanged(auth, (userAuth) => {
+
     if (userAuth) {
       store.dispatch(setIsLoading(true));
       setCurrentUser().then(() => {
